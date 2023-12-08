@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf8">
+  <title>Home Page</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    
+    .image {
+      width: 200px; /* Adjust the size as needed */
+      height: 200px;
+      margin-bottom: 20px;
+    }
+    
+   
+    button {
+        padding: 10px 20px;
+        background-color: #e95703;
+        color: #fff;
+        font-size: 18px;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        margin: 1%;
+        transition: background-color 0.3s ease;
+    }
+    
+    button:hover {
+        background-color: #f89705;
+    }   
+  
+    .carousel {
+      width: 400px;
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .carousel-inner {
+      width: 300%;
+      height: 100%;
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+    
+    .carousel-slide {
+      width: 33.33%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+    }
+    
+    /* Customize the appearance of each slide */
+    .slide-1 {
+      background-color: #3498db;
+      color: #fff;
+    }
+    
+    .slide-2 {
+      background-color: #e74c3c;
+      color: #fff;
+    }
+    
+    .slide-3 {
+      background-color: #27ae60;
+      color: #fff;
+    }
+      
+  </style>
+  
+</head>
+<body>
+  <img class="image" src="logo.jpg" alt="Image">
+  <form action="client/index.html">
+  <button class="button">Encontra o teu amigo!</button>
+  </form>
+  
+</body>
+</html>

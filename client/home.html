@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel = "icon" href= "icons/pin.png" style="height: 5px;">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title >How far am i</title>
+    <link rel="stylesheet" type="text/css" href="./css/styles.css" />
+    <script type="module" src="index.js"></script>
+  </head>
+  <style>  #map{
+        height: 1200px;
+        width: 100%;
+        border-radius: 10px;
+        
+      }</style>
+  <body>
+  
+    <header class="header">
+      <a href="" class="logo">How far <span class="yellow">am i</span></a>
+
+      <nav class="navbar">
+        <a href="index.html">Home</a>
+        <a href="index.html#about">Services</a>
+        <a href="index.html#services">How to</a>
+        <a href="index.html#contact">Contact Us</a>
+      </nav>
+
+      <!-- Hamburger -->
+      <div class="hamburger">
+        <img src="./images/grid-outline.svg" alt="" />
+      </div>
+    </header>
+
+    <div class="wrapper">
+      <div class="center-column" style="box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.5); margin-top:30%; margin-left:10%; text-align: center;"> 
+        <div id="canter-column" style="margin:10px; ">
+          <h2><a href="" class="">Search <span class="yellow">for a friend</span></a></h2>
+          <h4 style="color: darkgray;">My code</h4>
+             
+              <div>
+                <div id="code" class="code" type="text" name="name" ></div>
+              </div> <br>
+              <div> <!-- style="display: none;" > -->
+                <a><div id="display" class="code"type="text" name="name">Waiting for your location ... </div> </a>
+              </div> 
+              <div> <!-- style="display: none;" > -->
+                <a><div id="display1" class="code"></div></a>
+              </div>
+              <br>
+              <button id="demo" class="btn" type="submit" onclick="generateCodeShare()" action="/loc" style="text-align: center;">Get my location</button></a>
+          
+              <button id="partilha" class="btn" type="submit" >Share</button></a><br>
+          
+              <button id="ask" class="btn" type="submit" action="" >Ask for location!</button></a><br>
+          
+              <div id="friends" style="display: none; ">
+                <a>My friends code<div id="code" class="code" type="text" name="name" style="display: none"></div></a> 
+              </div>
+              <div style="display: none;" >
+                <a>Latitude<div id="display" class="code" type="text" name="name"></div> </a>
+              </div>
+               <div style="display: none;" >
+                <a>Longitude<div id="display1" class="code"></div></a>
+              </div>
+
+              <div id="data-output" class="code"></div><br><div id="msg" style="margin-left: 5%; margin-bottom: 5%"></div> 
+              <div id="data-output1" class="code"></div>
+              
+              <button id="share" class="btn" type="submit" action="" >Iniciar buscar</button>
+      </div>
+              
+    </div>      
+  
+    <div id="contentDiv" class="hidden" style="display: none;">
+      <input id="get" type="text" placeholder="enter your friend code">
+      <button id="askFriend">Find my friend</button>
+    </div>
+    
+  </div> <!--wrapper-->
+<!--
+  <div id="controls" style="position:absolute; padding-top: 40%; margin-right: 0; z-index: 9999;">
+    <div>
+      <button id="toggle" type="button" value="Toggle Street View" >Toggle View</button>
+      <button id="transit" style="position: absolute;">Transit View</button>
+    </div>
+    </div>
+  </div> -->
+    <!-- Chat button -->
+    <div class="center-column1">
+      <div id="chatContent">  
+        <div>
+          <ul id="chatLog"></ul>
+          <input type="text" id="messageInput" placeholder="Type your message...">
+          <button onclick="sendMessage()">Send</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="floating-panel">
+      <button id="toggle" type="button" value="Toggle Street View" >Toggle View</button>
+    </div>
+    
+    <div id="map" style="box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);"></div>
+    <div id="pano"></div>
+
+    <button class="goBtn">
+      <a href="" class="">How far <span class="yellow">am i</span></a>
+    </button>
+      <script src="app.js"></script>
+      <script>
+        let slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+          let i;
+          let slides = document.getElementsByClassName("mySlides");
+          for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";  
+          }
+          slideIndex++;
+          if (slideIndex > slides.length) {slideIndex = 1}    
+          slides[slideIndex-1].style.display = "block";  
+          setTimeout(showSlides, 2000); // Change image every 2 seconds
+        }
+
+        </script>
+      <script async
+              src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqfFxqcbv
+                    p_h1JIqX6kjVAJ5n-BxbqfcA&callback=initMap">
+      </script>
+      
+      <script>
+        var showButton = document.getElementById('ask');
+        var contentDiv= document.getElementById('contentDiv');
+        var inputField = document.getElementById('get');
+        var closeButton = document.getElementById('askFriend');
+        var share = document.getElementById('share');
+
+        share.addEventListener('click', function(){
+          window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: 'smooth'
+          });
+        }); 
+
+
+        showButton.addEventListener('click', function() {
+          contentDiv.style.display = 'flex';
+        });
+
+        closeButton.addEventListener('click', function() {
+          contentDiv.style.display = 'none';                          
+        });
+
+        document.addEventListener('click', function(event) {
+            if (event.target !== showButton && event.target !== inputField) {
+              contentDiv.style.display = 'none';
+            }
+        });
+
+
+        let sidebar = document.querySelector(".sidebar");
+        let closeBtn = document.querySelector("#btn");
+        let searchBtn = document.querySelector(".bx-search");
+        closeBtn.addEventListener("click", () => {
+          sidebar.classList.toggle("open");
+          menuBtnChange(); //calling the function(optional)
+        });
+        searchBtn.addEventListener("click", () => {
+          // Sidebar open when you click on the search iocn
+          sidebar.classList.toggle("open");
+          menuBtnChange(); //calling the function(optional)
+        });
+        // following are the code to change sidebar button(optional)
+        function menuBtnChange() {
+          if (sidebar.classList.contains("open")) {
+            closeBtn.classList.replace("bx-menu", "bx-menu-alt-right"); //replacing the iocns class
+          } else {
+            closeBtn.classList.replace("bx-menu-alt-right", "bx-menu"); //replacing the iocns class
+          }
+        }
+
+        function hideAndShowButtons(buttonNumber) {
+            var currentButton = document.getElementsByClassName("button" + buttonNumber);
+            currentButton.style.display = "none";
+            
+            var nextButtonNumber = buttonNumber + 1;
+            var nextButton = document.getElementsByClassName("button" + nextButtonNumber);
+            
+            if (nextButton) {
+                nextButton.style.display = "block"; // Display the next button
+            }
+        }
+
+      </script>
+   
+  </body>
+</html>
