@@ -4,6 +4,7 @@ const http = require('http');
 const WebSocket = require('ws');
 const mysql = require('mysql2');
 const cors = require('cors');
+const fs = require("fs");
 
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
@@ -15,9 +16,8 @@ app.use(express.static('public'))
 
 const connection = mysql.createConnection({
   host: "localhost",
-  port: 3306,
   user: "root",
-  password: "root",
+  password: "password",
   database: "geoshare"
 });
 
@@ -39,20 +39,22 @@ app.post('/loc', (req, res) => {
 wss.on('connection', (ws) => {
 
    // Generate a unique client ID (for demonstration purposes)
-  const clientId = randomId(5);
-
+  //const clientId = randomId(5);
+  const idClient = generateName();
   // Send the client ID to the client as a string
-  ws.send(clientId);
-  console.log(`Cliente Connected: ID ${ clientId }`)
+  ws.send(idClient);
+  console.log(`Cliente Connected: ID ${ idClient }`)
   
   // Listen for messages from the client
   ws.on('message', (message) => {
+    
     // Broadcast the message to all connected clients
     wss.clients.forEach((client) => {
       if (client !== ws && client.readyState === WebSocket.OPEN) {
-        client.send(`${clientId}: ${message}`);
+        client.send(`${idClient}: ${message}`);
       }
     });
+
   });
 
   ws.on('close', () => {
@@ -60,17 +62,17 @@ wss.on('connection', (ws) => {
   });
 });
 
-function randomId(length){
-  let result = '';
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  
-  for (let i = 0; i < length; i++) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    result += characters.charAt(randomIndex);
-  }
-  
-  return result;
+
+function generateName(){
+  const idName = fs.readFileSync("./names/listnames.txt", "utf-8").split('\n');;
+  const filteredNames = idName.filter(name => name.trim() !== ''); 
+  const randomIndex = Math.floor(Math.random() * filteredNames.length);
+  const randomName = filteredNames[randomIndex];
+
+  return randomName
 }
+
+
 
 app.get('/get/:id?', (req,res) => {
   
