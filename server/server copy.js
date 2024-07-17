@@ -12,8 +12,8 @@ const connection = mysql.createConnection({
   host: "localhost",
   port: 3306,
   user: "root",
-  password: "root",
-  database: "geoshare"
+  password: "YOURPASSWORD",
+  database: "YOURDATABASE"
 });
 
 app.post('/loc', (req, res) => {
