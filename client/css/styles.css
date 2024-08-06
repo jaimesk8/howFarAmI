@@ -21,6 +21,18 @@
   padding: 0;
 }
 
+.leaflet-control-container{
+   width: 30%;
+    background-color:#fcfcfc;
+    background-size: 350%;
+    margin: 46;
+    z-index: 9999;
+    position: fixed; 
+    top: 10%;
+    right: 5%;
+    border-radius: 0,50;
+}
+
 html {
   font-size: 62.5%;
   box-sizing: border-box;
@@ -53,6 +65,7 @@ section {
 .yellow {
   color: var(--yellow);
 }
+
 
 /* Header */
 .header {
@@ -586,6 +599,10 @@ section.app .content .links img {
 #data-output{
   background-color: #fcfcfc;
   border: 0;
+  width: 30%;
+  position: absolute; 
+  right: 2%;
+  bottom: 40%;
   z-index: 9999999999; 
   border-radius: 2px;
   box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
@@ -666,10 +683,9 @@ section.app .content .links img {
   .logo{
     position: absolute;
     z-index: 1;
-    left: 50%;
-    top: 0;
+    top: 2;
     content: "";
-    margin-left: -65px;
+    right: 3%;
     text-align: center;
   }
   
@@ -769,17 +785,27 @@ section.app .content .links img {
   }
   
   .center-column{
-    width: 30%;
+    width: 100%;
     /*background-image: url(../icons/sd.jpg);*/
     background-color:#fcfcfc;
     background-size: 350%;
-    margin-left: 0px;
-    margin-top: 30px;
+    bottom: 0; 
+    right: 0;
     z-index: 999;
-    position: absolute;
-    border-right: 4mm ridge rgba(211, 220, 50, .6);
-   
+    position: fixed;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
   }
+
+  #menuhead{
+    position: absolute;
+  }
+
+  #demo{
+    background-color: black; 
+  }
+
+  
 
   .center-column1{
     width: 30%;
@@ -788,10 +814,10 @@ section.app .content .links img {
     background-size: 350%;
     margin: 46;
     z-index: 9999;
-    position: absolute; 
-    bottom: 5%;
+    position: fixed; 
+    top: 10%;
     right: 5%;
-    border-left: 4mm ridge rgba(211, 220, 50, .6);
+    border-radius: 0,50;
   }
   
   
@@ -810,7 +836,8 @@ section.app .content .links img {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+  
+  width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
@@ -837,262 +864,26 @@ section.app .content .links img {
 
   #floating-panel {
     position: absolute;
-    z-index:0;
-    text-align: left;
+    top: 10px;
+    left: 25%;
+    z-index: 5;
+    background-color: #fff;
+    padding: 5px;
+    border: 1px solid #999;
+    text-align: center;
+    font-family: "Roboto", "sans-serif";
     line-height: 30px;
     padding-left: 10px;
-    margin: 5px;
+  }
+  
+  #floating-panel {
+    margin-left: -100px;
   }
 
   #share{
     cursor: pointer;
   }
-
-
-   
-  /* Sidebar */
-  .sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 78px;
-    background: #11101d;
-    padding: 6px 14px;
-    z-index: 99;
-    transition: all 0.5s ease;
-  }
-  .sidebar.open {
-    width: 250px;
-  }
-  .sidebar .logo-details {
-    height: 60px;
-    display: flex;
-    align-items: center;
-    position: relative;
-  }
-  .sidebar .logo-details .icon {
-    opacity: 0;
-    transition: all 0.5s ease;
-  }
-  .sidebar .logo-details .logo_name {
-    color: #fff;
-    font-size: 20px;
-    font-weight: 600;
-    opacity: 0;
-    transition: all 0.5s ease;
-  }
-  .sidebar.open .logo-details .icon,
-  .sidebar.open .logo-details .logo_name {
-    opacity: 1;
-  }
-  .sidebar .logo-details #btn {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
-    font-size: 22px;
-    transition: all 0.4s ease;
-    font-size: 23px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.5s ease;
-  }
-  .sidebar.open .logo-details #btn {
-    text-align: right;
-  }
-  .sidebar i {
-    color: #fff;
-    height: 60px;
-    min-width: 50px;
-    font-size: 28px;
-    text-align: center;
-    line-height: 60px;
-  }
-  .sidebar .nav-list {
-    margin-top: 20px;
-    height: 100%;
-  }
-  .sidebar li {
-    position: relative;
-    margin: 8px 0;
-    list-style: none;
-  }
-  .sidebar li .tooltip {
-    position: absolute;
-    top: -20px;
-    left: calc(100% + 15px);
-    z-index: 3;
-    background: #fff;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-    padding: 6px 12px;
-    border-radius: 4px;
-    font-size: 15px;
-    font-weight: 400;
-    opacity: 0;
-    white-space: nowrap;
-    pointer-events: none;
-    transition: 0s;
-  }
-  .sidebar li:hover .tooltip {
-    opacity: 1;
-    pointer-events: auto;
-    transition: all 0.4s ease;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  .sidebar.open li .tooltip {
-    display: none;
-  }
-  .sidebar input {
-    font-size: 15px;
-    color: #fff;
-    font-weight: 400;
-    outline: none;
-    height: 50px;
-    width: 100%;
-    width: 50px;
-    border: none;
-    border-radius: 12px;
-    transition: all 0.5s ease;
-    background: #1d1b31;
-  }
-  .sidebar.open input {
-    padding: 0 20px 0 50px;
-    width: 100%;
-  }
-  .sidebar .bx-search {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
-    font-size: 22px;
-    background: #1d1b31;
-    color: #fff;
-  }
-  .sidebar.open .bx-search:hover {
-    background: #1d1b31;
-    color: #fff;
-  }
-  .sidebar .bx-search:hover {
-    background: #fff;
-    color: #11101d;
-  }
-  .sidebar li a {
-    display: flex;
-    height: 100%;
-    width: 100%;
-    border-radius: 12px;
-    align-items: center;
-    text-decoration: none;
-    transition: all 0.4s ease;
-    background: #11101d;
-  }
-  .sidebar li a:hover {
-    background: #fff;
-  }
-  .sidebar li a .links_name {
-    color: #fff;
-    font-size: 15px;
-    font-weight: 400;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: 0.4s;
-  }
-  .sidebar.open li a .links_name {
-    opacity: 1;
-    pointer-events: auto;
-  }
-  .sidebar li a:hover .links_name,
-  .sidebar li a:hover i {
-    transition: all 0.5s ease;
-    color: #11101d;
-  }
-  .sidebar li i {
-    height: 50px;
-    line-height: 50px;
-    font-size: 18px;
-    border-radius: 12px;
-  }
-  .sidebar li.profile {
-    position: fixed;
-    height: 60px;
-    width: 78px;
-    left: 0;
-    bottom: -8px;
-    padding: 10px 14px;
-    background: #1d1b31;
-    transition: all 0.5s ease;
-    overflow: hidden;
-  }
-  .sidebar.open li.profile {
-    width: 250px;
-  }
-  .sidebar li .profile-details {
-    display: flex;
-    align-items: center;
-    flex-wrap: nowrap;
-  }
-  .sidebar li img {
-    height: 45px;
-    width: 45px;
-    object-fit: cover;
-    border-radius: 6px;
-    margin-right: 10px;
-  }
-  .sidebar li.profile .name,
-  .sidebar li.profile .job {
-    font-size: 15px;
-    font-weight: 400;
-    color: #fff;
-    white-space: nowrap;
-  }
-  .sidebar li.profile .job {
-    font-size: 12px;
-  }
-  .sidebar .profile #log_out {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
-    background: #1d1b31;
-    width: 100%;
-    height: 60px;
-    line-height: 60px;
-    border-radius: 0px;
-    transition: all 0.5s ease;
-  }
-  .sidebar.open .profile #log_out {
-    width: 50px;
-    background: none;
-  }
-  .home-section {
-    position: relative;
-    background: #e4e9f7;
-    min-height: 100vh;
-    top: 0;
-    left: 78px;
-    width: calc(100% - 78px);
-    transition: all 0.5s ease;
-    z-index: 2;
-  }
-  .sidebar.open ~ .home-section {
-    left: 250px;
-    width: calc(100% - 250px);
-  }
-  .home-section .text {
-    display: inline-block;
-    color: #11101d;
-    font-size: 25px;
-    font-weight: 500;
-    margin: 18px;
-  }
-  @media (max-width: 420px) {
-    .sidebar li .tooltip {
-      display: none;
-    }
-  }
+  
 
   #chatButton {
     position: fixed;
@@ -1107,4 +898,99 @@ section.app .content .links img {
     z-index: 9999;
   }
 
+
+  #spinner {
+    z-index: 999;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #91f900;
+    animation: spin 2s linear infinite;
+    -webkit-animation: spin 2s linear infinite;
+    display: none;
+  }
+
+
+  #chatContent{
+    z-index: 100;
+    position: relative;
+    margin-bottom: 500px;
+    top: 0;
+    left: 0;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
  
+  #private-chat, #public-chat, #user-list {
+    width: 400px;
+    height: 280px;
+    border:1px solid #000000;
+    float: left;
+    margin: 20px 50px 10px 30px;
+    background-color: #f7f7e6;
+    overflow: auto;
+    scroll-behavior: smooth;
+    padding: 12px;
+  }
+  #private-chat.disabled {
+    background-color: #EBEBE4;
+  }
+  #private-chat .header {
+    font-weight: bold;
+    font-size: 1.1em;
+    text-align: center;
+    color: #02528c;
+    margin-bottom: 10px;
+  }
+  .content .chat-label {
+    margin: 20px 50px 0 30px;
+    float: left;
+    width: 400px;
+  }
+  .content::after {
+    content: "";
+    clear: both;
+    display: block;
+  }
+  .chatbox>div {
+    float: left;
+  }
+  .chatbox, .namebox {
+    margin: 20px 0 20px 30px;
+  }
+  #private-text, #public-text, #name-text {
+    width: 400px;
+    margin: 10px; 
+    text-align: justify;
+  }
+
+  @media screen and (min-width: 601px) {
+    
+    .info{
+      font-size: x-small;
+      margin: 2%;
+      text-align: left;
+    }
+
+    img.a {
+      vertical-align: super;
+    }
+  }  
+
+  @media screen and (min-width: 100px) {
+    
+    .info{
+      font-size: x-small;
+      margin: 2%;
+      text-align: left;
+    }
+
+    img.a {
+      vertical-align: super;
+    }
+  }
