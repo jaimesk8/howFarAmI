@@ -1,167 +1,154 @@
+const socket = io('http://localhost:4000', {
+  transports: ['websocket'],
+});
 
-let map, infoWindow;
-var latitude = 0; 
+let map;
+let userMarker;
+let mk2; 
+var routingControl;
+var latitude = 0;
 var longitude = 0;
-let panorama;
+let idClient2;
+  
+//function initMap() {
+  map = L.map('map').setView([41.1555079, -8.627924], 13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
 
+  //const pin = document.getElementById("share");
+  //pin.addEventListener(L.marker([lats, long], 13).addTo(map));
+  const locationButton = document.getElementById("share");
+  //map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+  locationButton.addEventListener("click", () => {
+      var longitude = document.getElementById('display1').textContent;
+      var latitude = document.getElementById('display').textContent;
+      var idClient = document.getElementById('code').textContent;
+      idClient2 = document.getElementById('cliId').textContent;
+      //emmit the location to the socket
+      socket.emit('setId', idClient);
 
-function haversine_distance(mk1, mk2) {
-  var R = 3958.8; // Radius of the Earth in miles
-  var rlat1 = mk1.position.lat() * (Math.PI/180); // Convert degrees to radians
-  var rlat2 = mk2.position.lat() * (Math.PI/180); // Convert degrees to radians
-  var difflat = rlat2-rlat1; // Radian difference (latitudes)
-  var difflon = (mk2.position.lng()-mk1.position.lng()) * (Math.PI/180); // Radian difference (longitudes)
+      var long = parseFloat(longitude);
+      var lats = parseFloat(latitude);
 
-  var d = 2 * R * Math.asin(Math.sqrt(Math.sin(difflat/2)*Math.sin(difflat/2)+Math.cos(rlat1)*Math.cos(rlat2)*Math.sin(difflon/2)*Math.sin(difflon/2)));
-  return d;
-}
+      const randomString = "";
 
+      const posA = {
+        id: randomString,
+        lat: lats,
+        lng: long
+      }
 
+      var cliLon = document.getElementById('cliLon').textContent;
+      var cliLat = document.getElementById('cliLat').textContent;
 
-function initMap() {
+      var Flat = parseFloat(cliLat);
+      var Flon = parseFloat(cliLon);
 
-      var id = "";
-        map = new google.maps.Map(document.getElementById("map"), {
-          center: { lat: 41.1555079, lng: -8.6279243 },
-          zoom: 15,
-          disableDefaultUI: true,
-          //mapTypeId: "satellite",
-          streetViewControl: false,
-          mapId: "e9ec01ddb44aa407", //satellite
-        });
+      const posB = {
+        lat: Flat,
+        lng: Flon
+      };
 
-        /*const panorama = new google.maps.StreetViewPanorama(
-          document.getElementById("pano"),
-          {
-            position: fenway,
-            pov: {
-              heading: 34,
-              pitch: 10,
-            },
-          },
-        );*/
+      function initializeRoutingControl(userLocation) {
+        // Initialize the routing control with the initial waypoints
+        routingControl = L.Routing.control({
+            waypoints: [
+                L.latLng(userLocation.lat, userLocation.lng),
+                L.latLng(Flat, Flon)
+            ],
+            //routeWhileDragging: true
+        }).addTo(map);
+      }
+
+      // The markers for PositionA and PositionB
+      //var mk1 = L.marker([lats, long], 13).addTo(map);
+      function onLocationFound(e) {
+        var radius = e.accuracy / 2;
+
+        // Check if the marker already exists
+        if (userMarker) {
+          // Update marker position
+          userMarker.setLatLng(e.latlng);
+          //console.log("User marker", userMarker);
+          // Update the routing control waypoints
+          routingControl.setWaypoints([
+              L.latLng(e.latlng.lat, e.latlng.lng),
+              L.latLng(Flat, Flon)
+          ]);
+  
+        } else {
+            // Create a new marker
+            userMarker = L.marker(e.latlng).addTo(map);
+            // Initialize routing control with initial waypoints
+            initializeRoutingControl(e.latlng);
+        }
+
+        userMarker.bindPopup("You are within " + radius + " meters from this point").openPopup();
+        //L.circle(e.latlng, radius).addTo(map);
+        socket.emit('updateLocation', {idClient: idClient, latitude: e.latlng.lat, longitude: e.latlng.lng });
+        // Send the client 2 ID to the server     
+        socket.emit('requestLocation',  idClient2 );
+      } 
+
+      map.on('locationfound', onLocationFound);
+      //map.locate({setView: true, watch: true, maxZoom: 8});
+      map.locate({ watch: true, enableHighAccuracy: true });
+
+      // The markers for PositionA and PositionB
+      //var mk1 = L.marker([lats, long], 13).addTo(map);
+      //mk1.bindPopup('<b>I am here</b><br>', posA).openPopup();
+      //let mk2 = L.marker(posB).addTo(map);
+      //mk2.bindPopup('<b>Estamos bem perto</b><br>', posB).openPopup();
       
-       // map.setStreetView(panorama);
-        
-
-        //const transitLayer = new google.maps.TransitLayer();
-
-        //transitLayer.setMap(map);
-        //document.getElementById("transit").addEventListener("click", transitLayer.setMap(map));
-        
-        document.getElementById("toggle").addEventListener("click", toggleStreetView);
-
-        map.setTilt(100);
       
-        infoWindow = new google.maps.InfoWindow();
+      socket.on('locationUpdate', (data) => {
+        console.log('Received location update for client B:', data);
 
-      const locationButton = document.getElementById("share");
+        var longitude = document.getElementById('display1').textContent;
+        var latitude = document.getElementById('display').textContent;
+        // Update UI or perform any necessary actions based on the received location data
+        if (data.idClient === idClient2) {
+          // Check if the marker already exists
+          if (mk2) {
+            // Update marker position
+            mk2.setLatLng([data.latitude, data.longitude]);
+            //console.log("User marker", userMarker);
+            // Update the routing control waypoints
+            routingControl.setWaypoints([
+                L.latLng(latitude, longitude),
+                L.latLng([data.latitude, data.longitude])
+            ]);
+    
+          } else {
+              // Create a new marker
+              mk2 = L.marker([data.latitude, data.longitude]).addTo(map);
+          }
+        }
+      });
 
-    //map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
-      locationButton.addEventListener("click", () => {      
-                var longitude = document.getElementById('display1').textContent;
-                var latitude = document.getElementById('display').textContent; 
-                var long = parseFloat(longitude);
-                var lats = parseFloat(latitude);
-                
-                const randomString = 0;
-                
-                const posA = {
-                  id: randomString,
-                  lat: lats,
-                  lng: long
-                }
 
-                var cliLon = document.getElementById('cliLon').textContent;
-                var cliLat = document.getElementById('cliLat').textContent;
-      
-                var Flat = parseFloat(cliLat);
-                var Flon = parseFloat(cliLon);
+      // var polygon = L.polygon([posA, posB]).addTo(map);
+      // polygon.bindPopup("Estamos bem perto!");
+    
+      // Calculate and display the distance between markers
+      var distance = haversine_distance(mk1, mk2);
+      document.getElementById('msg').innerHTML = "Distance between markers: " + distance.toFixed(2) + " mi.";
 
-                const posB = {lat: Flat, lng: Flon};
-                
-                // The markers for PositionA and PositionB
-                var mk1 = new google.maps.Marker({position: posA, map: map});
-                var mk2 = new google.maps.Marker({position: posB, map: map});
-
-                document.getElementById("toggle").addEventListener("click", toggleStreetView);
-                
-                // Calculate and display the distance between markers
-                var distance = haversine_distance(mk1, mk2);
-                document.getElementById('msg').innerHTML = "Distance between markers: " + distance.toFixed(2) + " mi.";
-                // Draw a line showing the straight distance between the markers
-               // var line = new google.maps.Polyline({path: [pos, frick], map: map});
-                let directionsService = new google.maps.DirectionsService();
-                let directionsRenderer = new google.maps.DirectionsRenderer();
-                directionsRenderer.setMap(map); // Existing map object displays directions
-                // Create route from existing points used for markers
-                const route = {
-                    origin: posA,
-                    destination: posB,
-                    travelMode: 'DRIVING'
-                }
-
-                directionsService.route(route,
-                  function(response, status) { // anonymous function to capture directions
-                    if (status !== 'OK') {
-                      window.alert('Directions request failed due to ' + status);
-                      return;
-                    } else {
-                      directionsRenderer.setDirections(response); // Add route to the map
-                      var directionsData = response.routes[0].legs[0]; // Get data about the mapped route
-                      if (!directionsData) {
-                        window.alert('Directions request failed');
-                        return;
-                      }
-                      else {
-                        document.getElementById('msg').innerHTML += " Driving distance is " + directionsData.distance.text + " (" + directionsData.duration.text + ").";
-                      }
-                    }
-                  });
-                
-                infoWindow.setPosition(pos);
-                //infoWindow.setContent("Estou aqui.");
-                infoWindow.open(map);
-                map.setCenter(pos);
-                // We get the map's default panorama and set up some defaults.
-                // Note that we don't yet set it visible.
-                panorama = map.getStreetView(); // TODO fix type
-                panorama.setPosition(map);
-                panorama.setPov(
-                  /** @type {google.maps.StreetViewPov} */ {
-                    heading: 265,
-                    pitch: 0,
-                  },
-                );
-                
-            
-        },
-              () => {
-                handleLocationError(true, infoWindow, map.getCenter());
-              }
-      );   
-}
-
+    },
+    () => {
+      handleLocationError(true, infoWindow, map.getCenter());
+    }
+  );
+//}
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   infoWindow.setPosition(pos);
   infoWindow.setContent(
-    browserHasGeolocation
-      ? "Error: The Geolocation service failed."
-      : "Error: Your browser doesn't support geolocation."
+    browserHasGeolocation ?
+    "Error: The Geolocation service failed." :
+    "Error: Your browser doesn't support geolocation."
   );
   infoWindow.open(map);
 }
-
-
-function toggleStreetView() {
-  const toggle = panorama.getVisible();
-
-  if (toggle == false) {
-    panorama.setVisible(true);
-  } else {
-    panorama.setVisible(false);
-  }
-}
-
-window.initMap = initMap;
