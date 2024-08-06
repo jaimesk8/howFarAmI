@@ -1,12 +1,11 @@
 // expressServer.js
 const mysql = require('mysql2');
-const { executaSQL } = require('./database.js');
 
 const connection = mysql.createConnection({
   host: 'localhost',
-  user: 'root',
-  password: 'root',
-  database: 'geoshare',
+  user: 'yourusername',
+  password: 'yourpassword',
+  database: 'yourdatabase',
 });
 
 function initExpressServer(app) {
