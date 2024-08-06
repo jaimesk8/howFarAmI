@@ -1,106 +1,82 @@
 const express = require('express');
-const app = express();
 const http = require('http');
-const WebSocket = require('ws');
-const mysql = require('mysql2');
+const socketIO = require('socket.io');
 const cors = require('cors');
-const fs = require("fs");
+const path = require('path')
+const {
+  initExpressServer
+} = require('./expressServer');
 
+const app = express();
 const server = http.createServer(app);
-const wss = new WebSocket.Server({ server });
+const io = socketIO(server, {
+  transports: ['websocket'],  // Use only WebSocket transport
+});
 
-app.use(cors())
+
+app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
-app.use(express.static('public'))
+app.use(express.urlencoded({
+  extended: true
+}));
 
-const connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "password",
-  database: "geoshare"
+// Data structure to store socket connections by client ID
+const clients = new Map();
+
+
+initExpressServer(app);
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/home.html'));
 });
 
-app.post('/loc', (req, res) => {
-   const id =req.body.id;
-   const lat =req.body.lat;
-   const lon =req.body.lon;
-   const pos = {
-    id: id,
-    lat: lat,
-    lon: lon,
-   }
-  executaSQL(`INSERT INTO data (id,lat,lon) VALUES ("${ id }","${ lat }","${ lon }")`, res);
-  console.log("client:" , pos);
-  res.json(pos);
-});
+io.on('connection', (socket) => {
+  console.log('A user connected');
 
-//WEB SOCKET 
-wss.on('connection', (ws) => {
-
-   // Generate a unique client ID (for demonstration purposes)
-  //const clientId = randomId(5);
-  const idClient = generateName();
-  // Send the client ID to the client as a string
-  ws.send(idClient);
-  console.log(`Cliente Connected: ID ${ idClient }`)
-  
-  // Listen for messages from the client
-  ws.on('message', (message) => {
+  // Set the client ID received from the client
+  socket.on('setId', (id) => {
+    console.log('Client ID set:', id);
     
-    // Broadcast the message to all connected clients
-    wss.clients.forEach((client) => {
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
-        client.send(`${idClient}: ${message}`);
+    // Store the socket connection with the client ID
+    clients.set(id, socket);
+  });
+
+  //listen to location updates
+  socket.on('updateLocation', (data) => {
+    const { idClient, latitude, longitude } = data;
+    clients.set(idClient, { latitude, longitude });
+    console.log('Received updated location:', idClient, ":", data);
+    // You can handle the updated location data as needed, e.g., save to a database, broadcast to other clients, etc.
+    // Broadcast the updated location to all clients
+    io.emit('locationUpdate', data);
+
+  });
+
+  // Handle requests for client locations
+  socket.on('requestLocation', (idClient) => {
+    const location = clients.get(idClient);
+    if (location) {
+        console.log('Sending location to client', idClient, ':', location);
+        socket.emit('locationUpdate', idClient );
+    } else {
+        console.log('Client location not found:', idClient);
+    }
+  });
+  
+  socket.on('disconnect', () => {
+    // Remove the socket connection from the data structure when it disconnects
+    clients.forEach((value, key) => {
+      if (value === socket) {
+        clients.delete(key);
+        console.log(`Client disconnected with ID: ${key}`);
       }
     });
-
-  });
-
-  ws.on('close', () => {
-    console.log('Client disconnected');
   });
 });
 
+const PORT = 4000;
 
-function generateName(){
-  const idName = fs.readFileSync("./names/listnames.txt", "utf-8").split('\n');;
-  const filteredNames = idName.filter(name => name.trim() !== ''); 
-  const randomIndex = Math.floor(Math.random() * filteredNames.length);
-  const randomName = filteredNames[randomIndex];
-
-  return randomName
-}
-
-
-
-app.get('/get/:id?', (req,res) => {
-  
-  const id = req.params.id;
-  const query = 'SELECT * from data WHERE id = ?';
-  connection.query(query, [id], (err, results) => {
-    if (err) {
-      console.error('Error searching for ID:', err);
-      return res.status(500).send('Internal Server Error');
-    }
-    if (results.length === 0) {
-      return res.status(404).send('ID not found');
-    }
-    console.log("Server:",  results[0]);
-    res.send(results[0]);
-  });
-});
-
-// Start the combined server
-const PORT = process.env.PORT || 4000;
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
-function executaSQL(sqlQry, res){
-
-  connection.query(sqlQry, (error, results, fields) => {
-      if(error)
-        res.json(error);
-  });
-}
