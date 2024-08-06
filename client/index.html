@@ -1,225 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>How Far I am</title>
-    <!-- StyleSheets -->
-    <link rel="stylesheet" href="css/styles.css" />
-  </head>
-  <body>
-    <!-- Preloader -->
-    <div class="preloader">
-      <img src="./images/preloader.gif" alt="" />
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How Far I am</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <!-- Preloader
+  <div class="preloader">
+    <img src="./images/preloader.gif" alt="" />
+  </div> -->
+  <header class="header">
+    <a href="" class="logo">How far <span class="yellow">am i</span></a>
+    <nav class="navbar">
+      <a href="#home">Home</a>
+      <a href="#about">Services</a>
+      <a href="#services">How to</a>
+      <a href="#contact">Contact Us</a>
+      <a href="home.html" class="btn">Find a friend</a>
+    </nav>
+    <div class="hamburger">
+      <img src="./images/grid-outline.svg" alt="" />
+    </div>
+  </header>
+
+  <!-- Home -->
+  <section class="home" id="home">
+    <div class="content">
+      <h1>Find your friends <span class="yellow">Easier & Faster.</span></h1>
+      <p>
+        Navigate your friendships on the map with ease using 'How Far Am I?'
+        – where distance brings you closer.
+      </p>
+      <a href="home.html" class="home-btn">Find a friend</a>
+    </div>
+    <div class="image">
+      <img src="./images/undraw_location_search_re_ttoj.svg" alt="" />
+    </div>
+  </section>
+
+  <!-- How to -->
+  <section class="services" id="services">
+    <div class="top">
+      <h2><span class="yellow">How to </span>find a friend</h2>
+      <p>
+        Now you're ready to connect with your friends, share your locations,
+        and explore together on "How Far Am I?" It's as simple as that!
+      </p>
+    </div>
+    <div class="bottom">
+      <div class="box">
+        <img src="./images/icons8-online-binary-code-64.png" alt="" />
+        <h4>1. Generate your code</h4>
+        <p>
+          Click the "Generate Code" button to create your unique identifier.
+          This code is your key to sharing your location with friends.
+        </p>
+      </div>
+      <div class="box">
+        <img src="./images/icons8-share-location-66.png" alt="" />
+        <h4>2. Share Your Code and Location</h4>
+        <p>
+          Share your generated code with your friends through messaging apps or in person.
+          Ask your friends to enter your code into their "How Far Am I?" app.
+        </p>
+      </div>
+      <div class="box">
+        <img src="./images/order-food.svg" alt="" />
+        <h4>3. Get a Friend Code</h4>
+        <p>
+          Ask your friends to generate their own friend codes within the app.
+          Collect their friend codes and enter them in your app.
+          Once connected, you can see each other's locations on the map.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- About #1 -->
+  <section class="about" id="about">
+    <div class="image">
+      <img src="./images/undraw_current_location_re_j130.svg" alt="" />
+    </div>
+    <div class="content">
+      <h3><span class="yellow">Find </span> anytime and anywhere</h3>
+      <p>
+        With 'How Far Am I?' in your pocket, finding your friends is a breeze.
+        No matter the time or place, our app lets you locate them effortlessly.
+      </p>
+      <a href="home.html" class="btn">Share Location</a>
+    </div>
+  </section>
+
+  <!-- About #2 -->
+  <section class="about about-2">
+    <div class="content">
+      <h3>
+        <span class="yellow">Connect</span> When It Matters Most
+      </h3>
+      <p>
+        Stay connected, even in the most challenging circumstances.
+        Our app ensures you can always find your friends, no matter where life takes you
+      </p>
+      <a href="home.html" class="btn">Make an call</a>
     </div>
 
-    <header class="header">
-      <a href="" class="logo">How far <span class="yellow">am i</span></a>
-
-      <nav class="navbar">
-        <a href="#home">Home</a>
-        <a href="#about">Services</a>
-        <a href="#services">How to</a>
-        <a href="#contact">Contact Us</a>
-        <a href="home.html" class="btn">Find a friend</a>
-      </nav>
-
-      <!-- Hamburger -->
-      <div class="hamburger">
-        <img src="./images/grid-outline.svg" alt="" />
-      </div>
-    </header>
-
-    <!-- Home -->
-    <section class="home" id="home">
-      <div class="content">
-        <h1>Find your friends <span class="yellow">Easier & Faster.</span></h1>
-        <p>
-            Navigate your friendships on the map with ease using 'How Far Am I?'
-             – where distance brings you closer.
-        </p>
-        <a href="home.html" class="home-btn">Find a friend</a>
-      </div>
-      <div class="image">
-        <img src="./images/undraw_location_search_re_ttoj.svg" alt="" />
-      </div>
-    </section>
-
-    <!-- Services -->
-    <section class="services" id="services">
-      <div class="top">
-        <h2><span class="yellow">How to </span>find a friend</h2>
-        <p>
-            Now you're ready to connect with your friends, share your locations, 
-            and explore together on "How Far Am I?" It's as simple as that!
-        </p>
-      </div>
-
-      <div class="bottom">
-        <div class="box">
-          <img src="./images/icons8-online-binary-code-64.png" alt="" />
-          <h4>1. Generate your code</h4>
-          <p>
-            Click the "Generate Code" button to create your unique identifier.
-            This code is your key to sharing your location with friends.
-          </p>
-        </div>
-        <div class="box">
-          <img src="./images/icons8-share-location-66.png" alt="" />
-          <h4>2. Share Your Code and Location</h4>
-          <p>
-            Share your generated code with your friends through messaging apps or in person.
-            Ask your friends to enter your code into their "How Far Am I?" app.
-          </p>
-        </div>
-        <div class="box">
-          <img src="./images/order-food.svg" alt="" />
-          <h4>3. Get a Friend Code:</h4>
-          <p>
-            Ask your friends to generate their own friend codes within the app.
-            Collect their friend codes and enter them in your app.
-            Once connected, you can see each other's locations on the map.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- About #1 -->
-    <section class="about" id="about">
-      <div class="image">
-        <img src="./images/undraw_current_location_re_j130.svg" alt="" />
-      </div>
-      <div class="content">
-        <h3><span class="yellow">Find </span> anytime and anywhere</h3>
-        <p>
-            With 'How Far Am I?' in your pocket, finding your friends is a breeze. 
-            No matter the time or place, our app lets you locate them effortlessly.
-        </p>
-        <a href="home.html" class="btn">Share Location</a>
-      </div>
-    </section>
-
-    <!-- About #2 -->
-    <section class="about about-2">
-      <div class="content">
-        <h3>
-          <span class="yellow">Connect</span> When It Matters Most
-        </h3>
-        <p>
-            Stay connected, even in the most challenging circumstances. 
-            Our app ensures you can always find your friends, no matter where life takes you
-        </p>
-        <a href="home.html" class="btn">Make an call</a>
-      </div>
-
-      <div class="image">
-        <img src="./images/undraw_traveling_yhxq.svg" alt="" />
-      </div>
-    </section>
-
-    <!-- About #3 -->
-    <section class="about about-3" style="gap: 3rem 13rem">
-      <div class="image">
-        <img src="./images/undraw_location_tracking_re_n3ok.svg" alt="" />
-      </div>
-
-      <div class="content">
-        <h3><span class="yellow">Track</span> Your Friends Very Easily</h3>
-        <p>
-            Tracking your friends has never been simpler. 'How Far Am I?' 
-            offers an intuitive and easy-to-use interface,
-            ensuring you can keep tabs on your pals with ease
-        </p>
-        <a href="home.html" class="btn">Track Now</a>
-      </div>
-    </section>
-
-    <!-- App -->
-    <section class="app" id="contact">
-      <div class="image">
-        <img src="./images/undraw_mobile_app_re_catg.svg" style="height: fit-content;" alt="" />
-      </div>
-      <div class="content">
-        <h3>Place your order through our app</h3>
-        <p>
-          You can easily place your order using our mobile app. Now you can
-          download our app for both IOS and Android mobiles.
-        </p>
-        <div class="links">
-          <img src="./images/app-store.png" alt="" />
-          <img src="./images/google-play.png" alt="" />
-        </div>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="top">
-        <div class="content">
-          <a href="home.html" class="logo">How far <span class="yellow">am i</span></a>
-          <p>
-            Navigate your friendships on the map with ease using 'How Far Am I?'
-             – where distance brings you closer.
-          </p>
-        </div>
-
-        <div class="links">
-          <div class="link">
-            <h4>Contact Information</h4>
-            <div>
-              <img src="./images/location-cross.svg" alt="" />
-              <span>12312,Porto, Porto Portugal,2023.</span>
-            </div>
-            <div>
-              <img src="./images/sms-tracking.svg" alt="" />
-              <span>ojaimemarinho@gmail.com</span>
-            </div>
-          </div>
-
-          <div class="link">
-            <h4>Quick Links</h4>
-            <a href="#">Services</a>
-            <a href="#">About Us</a>
-            <a href="#">Contact Us</a>
-            <a href="#">Download</a>
-          </div>
-
-          <div class="link">
-            <h4>Legal</h4>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Term of Use</a>
-            <a href="#">Conditions</a>
-            <a href="#">Location</a>
-          </div>
-
-          <div class="link">
-            <h4>Connect with Us</h4>
-            <div>
-              <img src="./images/instagram.svg" alt="" />
-              <span>Instagram</span>
-            </div>
-            <div>
-              <img src="./images/twitter.svg" alt="" />
-              <span>Twitter</span>
-            </div>
-            <div>
-              <img src="./images/facebook.svg" alt="" />
-              <span>Facebook</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="bottom">
-        <p>Copyright © 2023 How far am i All rights reserved.</p>
-      </div>
-    </footer>
-
-    <!-- Go To Top -->
-    <div class="scroll-top">
-      <img src="./images/arrow-up-outline.svg" alt="" />
+    <div class="image">
+      <img src="./images/undraw_traveling_yhxq.svg" alt="" />
     </div>
-    <!-- Scripts -->
-    <script src="js/main.js"></script>
-  </body>
+  </section>
+
+  <!-- About #3 -->
+  <section class="about about-3" style="gap: 3rem 13rem">
+    <div class="image">
+      <img src="./images/undraw_location_tracking_re_n3ok.svg" alt="" />
+    </div>
+
+    <div class="content">
+      <h3><span class="yellow">Track</span> Your Friends Very Easily</h3>
+      <p>
+        Tracking your friends has never been simpler. 'How Far Am I?'
+        offers an intuitive and easy-to-use interface,
+        ensuring you can keep tabs on your pals with ease
+      </p>
+      <a href="home.html" class="btn">Track Now</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="top">
+      <div class="content">
+        <a href="home.html" class="logo">How far <span class="yellow">am i</span></a>
+        <p>
+          Navigate your friendships on the map with ease using 'How Far Am I?'
+          – where distance brings you closer.
+        </p>
+      </div>
+
+      <div class="links">
+        <div class="link">
+          <h4>Contact Information</h4>
+          <div>
+            <img src="./images/location-cross.svg" alt="" />
+            <span>12312,Porto, Porto Portugal,2023.</span>
+          </div>
+          <div>
+            <img src="./images/sms-tracking.svg" alt="" />
+            <span>ojaimemarinho@gmail.com</span>
+          </div>
+        </div>
+        <div class="link">
+          <h4>Quick Links</h4>
+          <a href="#">Services</a>
+          <a href="#">About Us</a>
+          <a href="#">Contact Us</a>
+          <a href="#">Download</a>
+        </div>
+        <div class="link">
+          <h4>Legal</h4>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Term of Use</a>
+          <a href="#">Conditions</a>
+          <a href="#">Location</a>
+        </div>
+        <div class="link">
+          <h4>Connect with Us</h4>
+          <div>
+            <img src="./images/instagram.svg" alt="" />
+            <span>Instagram</span>
+          </div>
+          <div>
+            <img src="./images/twitter.svg" alt="" />
+            <span>Twitter</span>
+          </div>
+          <div>
+            <img src="./images/facebook.svg" alt="" />
+            <span>Facebook</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bottom">
+      <p>Copyright © 2024 How far am i All rights reserved.</p>
+    </div>
+  </footer>
+  <!-- Go To Top -->
+  <div class="scroll-top">
+    <img src="./images/arrow-up-outline.svg" alt="" />
+  </div>
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+</body>
 </html>
