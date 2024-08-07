@@ -41,4 +41,8 @@ function initExpressServer(app) {
   });
 }
 
+function executaSQL(sqlQry, res) {
+  connection.query(sqlQry)
+}
+
 module.exports = { initExpressServer };
