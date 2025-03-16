@@ -2,7 +2,8 @@
 
 Share location though a socket in real time for both clients. Made with node.js and leaflet 
 
-![alt text](https://github.com/jaimesk8/howFarAmI/blob/main/layout/Captura%20de%20Tela%202024-04-15%20a%CC%80s%2021.10.54.png)
+<img src="https://github.com/jaimesk8/howFarAmI/blob/main/layout/Captura%20de%20Tela%202024-04-15%20a%CC%80s%2021.10.54.png" alt="alt text" width="100">
+
 
 ### To install 
 
